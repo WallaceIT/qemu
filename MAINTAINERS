@@ -2749,6 +2749,12 @@ S: Supported
 F: hw/display/vhost-user-media*
 F: include/hw/virtio/vhost-user-media.h
 
+vhost-user-can
+M: Francesco Valla <francesco@valla.it>
+S: Maintained
+F: include/hw/virtio/vhost-user-can.h
+F: hw/virtio/vhost-user-can*
+
 virtio-crypto
 M: Gonglei <arei.gonglei@huawei.com>
 S: Supported

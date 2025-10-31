@@ -64,6 +64,9 @@ platform details for what sort of virtio bus to use.
   * - vhost-user-rtc
     - Real time clock
     - `vhost-device-rtc <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-rtc>`_
+  * - vhost-user-can
+    - CAN (Controller Area Network)
+    - `vhost-device-can <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-can>`_
 
 The referenced *daemons* are not exhaustive, any conforming backend
 implementing the device and using the vhost-user protocol should work.
