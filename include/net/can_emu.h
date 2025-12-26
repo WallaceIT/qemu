@@ -56,6 +56,8 @@ typedef struct qemu_can_frame {
 #define QEMU_CAN_RTR_FLAG 0x40000000U /* remote transmission request */
 #define QEMU_CAN_ERR_FLAG 0x20000000U /* error message frame */
 
+#define QEMU_CAN_ERR_BUSOFF 0x00000040U /* bus off */
+
 #define QEMU_CAN_SFF_MASK 0x000007FFU /* standard frame format (SFF) */
 #define QEMU_CAN_EFF_MASK 0x1FFFFFFFU /* extended frame format (EFF) */
 

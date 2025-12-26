@@ -161,6 +161,18 @@ config CAN_CTUCANFD_PCI
     depends on PCI && CAN_CTUCANFD
     select CAN_BUS
 
+config CAN_VIRTIO
+    bool
+    default y
+    depends on VIRTIO
+    select CAN_BUS
+
+config CAN_VIRTIO_PCI
+    bool
+    default y if PCI_DEVICES
+    depends on PCI && CAN_VIRTIO
+    select CAN_BUS
+
 config VHOST_USER_CAN
     bool
     default y
