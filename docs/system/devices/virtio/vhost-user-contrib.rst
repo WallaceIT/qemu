@@ -20,6 +20,51 @@ guest. You almost certainly want to use the :ref:`storage-daemon`
 instead which supports a wide variety of storage modes and exports a
 number of interfaces including vhost-user.
 
+.. _vhost_user_can:
+
+vhost-user-can - CAN emulation
+==================================
+
+The Virtio CAN device is a paravirtualized device for CAN networking.
+
+Description
+-----------
+
+The vhost-user-can device implementation binds to a SocketCAN interface and
+relais frames between it and the guest.
+
+QEMU provides a backend implementation in contrib/vhost-user-can.
+
+Linux kernel support
+--------------------
+
+Virtio can requires a guest Linux kernel built with the
+``CONFIG_VIRTIO_CAN`` option.
+
+Examples
+--------
+
+The backend daemon should be started first:
+
+::
+
+  host# vhost-user-can --socket-path=can0.sock	--interface=can0
+
+The QEMU invocation needs to create a chardev socket to communicate with the
+backend daemon and access the VirtIO queues with the guest over the
+:ref:`shared memory <shared_memory_object>`.
+
+::
+
+  host# qemu-system								\
+      -chardev socket,path=/tmp/can0.sock,id=can0				\
+      -device vhost-user-can-pci,chardev=can0					\
+      -m 4096 									\
+      -object memory-backend-file,id=mem,size=4G,mem-path=/dev/shm,share=on	\
+      -numa node,memdev=mem							\
+      ...
+
+
 .. _vhost_user_gpu:
 
 vhost-user-gpu - gpu device

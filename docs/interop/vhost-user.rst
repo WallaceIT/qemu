@@ -2015,3 +2015,12 @@ Command line options:
   Enable read-only.
 
   (optional)
+
+vhost-user-can
+--------------
+
+Command line options:
+
+--interface=CAN_IFACE
+
+  Specify can interface name.
