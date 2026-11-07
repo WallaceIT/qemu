@@ -32,6 +32,7 @@
 #include "standard-headers/linux/virtio_mem.h"
 #include "standard-headers/linux/virtio_vsock.h"
 #include "standard-headers/linux/virtio_gpio.h"
+#include "standard-headers/linux/virtio_can.h"
 
 /* TODO Remove once the Linux headers have caught up */
 #ifndef VIRTIO_BLK_F_REQ_FLAGS_OUT_FUA
@@ -474,6 +475,23 @@ static const qmp_virtio_feature_map_t virtio_gpio_feature_map[] = {
     { -1, "" }
 };
 
+/* virtio/vhost-can features mapping */
+static const qmp_virtio_feature_map_t virtio_can_feature_map[] = {
+    FEATURE_ENTRY(VIRTIO_CAN_F_CAN_CLASSIC, \
+            "VIRTIO_CAN_F_CAN_CLASSIC: Device supports CAN classic frames"),
+    FEATURE_ENTRY(VIRTIO_CAN_F_CAN_FD, \
+            "VIRTIO_CAN_F_CAN_FD: Device supports CAN FD frames"),
+    FEATURE_ENTRY(VIRTIO_CAN_F_RTR_FRAMES, \
+            "VIRTIO_CAN_F_RTR_FRAMES: Device supports RTR frames"),
+    FEATURE_ENTRY(VIRTIO_CAN_F_LATE_TX_ACK, \
+            "VIRTIO_CAN_F_LATE_TX_ACK: device marks transmission requests "
+            "as used after the CAN FRAME has been transmitted on the CAN bus."),
+    FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+            "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+            "negotiation supported"),
+    { -1, "" }
+};
+
 #define CONVERT_FEATURES(type, map, is_status, bitmap)   \
     ({                                                   \
         type *list = NULL;                               \
@@ -628,6 +646,10 @@ VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id,
         features->dev_features =
             CONVERT_FEATURES_EX(strList, virtio_gpio_feature_map, bitmap);
         break;
+    case VIRTIO_ID_CAN:
+        features->dev_features =
+            CONVERT_FEATURES_EX(strList, virtio_can_feature_map, bitmap);
+        break;
     /* No features */
     case VIRTIO_ID_9P:
     case VIRTIO_ID_PMEM:
@@ -649,7 +671,6 @@ VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id,
     case VIRTIO_ID_SCMI:
     case VIRTIO_ID_NITRO_SEC_MOD:
     case VIRTIO_ID_WATCHDOG:
-    case VIRTIO_ID_CAN:
     case VIRTIO_ID_DMABUF:
     case VIRTIO_ID_PARAM_SERV:
     case VIRTIO_ID_AUDIO_POLICY:
